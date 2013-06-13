@@ -1,13 +1,4 @@
-#require 'ruby-prof'
 require 'set'
-# Convert a string containing a comma separated list of numbers into text
-#
-# @param [String]
-# @return [String]
-def to_text(numbers)
-  int_array_to_string(list_to_int_array(numbers))
-end
-
 def list_to_int_array(numbers)
   numbers.split(',').map(&:to_i)
 end
@@ -24,25 +15,10 @@ def int_array_to_string(array)
   array.map(&:chr).join
 end
 
-# Convert text into a comma separated list of numbers representing the text 
-#
-# @param [String]
-# @return [String]
-def to_numbers(text)
-  text.chars.map(&:ord).map(&:to_s).join(',')
-end
-
-# Encrypts/decrypts the text using the key
-# 
-# @param [Array<int>]
-# @param [Array<int>]
-# @return [Array<int>]
 def process(int_array, key, valid, allowable_bad=15)
-  #ret_value = Array.new(int_array.size)
   ret_value = []
   invalid_count = 0
   int_array.each_with_index do |item, index|
-    #ret_value[index] = (item ^ key[index % key.size])
     new_val = (item ^ key[index % key.size])
     invalid_count += 1 unless valid.include?(new_val)
     return [] if invalid_count > allowable_bad
@@ -78,7 +54,6 @@ ks = keyspace
 puts "number of possible keys: #{ks.size}"
 puts "valid chars: #{valid_chars.join}"
 start = Time.now
-#RubyProf.start
 all_possibilities = Hash.new
 valid = string_to_int_array(valid_chars.join).to_set
 ks.each_with_index do |word, i| 
@@ -99,8 +74,3 @@ all_possibilities.each_pair do |key, plaintext|
   puts "PLAIN TEXT:"
   puts plaintext
 end
-#result = RubyProf.stop
-
-# Print a flat profile to text
-#printer = RubyProf::FlatPrinter.new(result)
-#printer.print(STDOUT)
