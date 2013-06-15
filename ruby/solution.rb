@@ -33,7 +33,7 @@ def valid_chars(extended=false)
   'A'.upto('Z').map {|c| ret << c }
   '0'.upto('9').map {|c| ret << c }
   " !.?,'\"-()\t\r\n".chars.map { |c| ret << c }
-  "/;:|`~@\\\#$%^&*_=+{}<>[]\"'\t\r\n".chars.map { |c| ret << c } if extended
+  "/;:|`~@\\\#$%^&*_=+{}<>[]".chars.map { |c| ret << c } if extended
   ret
 end
 
